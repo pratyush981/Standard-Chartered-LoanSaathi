@@ -1,5 +1,7 @@
 Standard Chartered LoanSaathi 
 
+https://github.com/pratyush981/Standard-Chartered-LoanSaathi/blob/main/loansaathi.mp4
+
 AI-powered Loan Processing Assistant for Standard Chartered Bank Hackathon
 
 📌 Overview
