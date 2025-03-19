@@ -22,9 +22,14 @@ LoanSaathi is an AI-powered virtual bank manager designed to streamline the loan
 
 
 🏗️ Tech Stack
+
 Python (Flask/FastAPI for backend)
-OpenAI/Gemini API (for NLP chatbot)
+
 Tesseract OCR (for document processing)
+
 Scikit-Learn/XGBoost (for loan eligibility prediction)
+
 MongoDB/MySQL (for storing customer data)
+
 React.js (for front-end interface)
+
