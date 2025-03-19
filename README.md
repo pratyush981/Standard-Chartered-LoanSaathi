@@ -5,6 +5,7 @@ AI-powered Loan Processing Assistant for Standard Chartered Bank Hackathon
 LoanSaathi is an AI-powered virtual bank manager designed to streamline the loan application process for Standard Chartered Bank. It leverages Optical Character Recognition (OCR) for document verification, Natural Language Processing (NLP) for customer interaction, and Machine Learning (ML) for loan eligibility prediction.
 
 🎯 Features
+
 ✅ AI-driven loan assistance through chatbot
 ✅ OCR-based document verification
 ✅ Automated credit score & risk analysis
