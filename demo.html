@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Branch Manager Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn {
+            border-radius: 5px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: #000;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .stage-indicator {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        .stage-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        
+        .stage-dot.active {
+            background-color: #0d6efd;
+            color: white;
+        }
+        
+        .stage-dot.completed {
+            background-color: #198754;
+            color: white;
+        }
+        
+        .stage-line {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #e9ecef;
+            z-index: 1;
+        }
+        
+        .stage-progress {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            height: 2px;
+            background-color: #198754;
+            z-index: 1;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+        
+        .chat-bubble {
+            padding: 15px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            max-width: 80%;
+            position: relative;
+        }
+        
+        .ai-bubble {
+            background-color: #f1f0f0;
+            border-top-left-radius: 5px;
+            margin-right: auto;
+        }
+        
+        .user-bubble {
+            background-color: #d1e7ff;
+            border-top-right-radius: 5px;
+            margin-left: auto;
+        }
+        
+        .chat-container {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            margin-top: 20px;
+            background-color: white;
+        }
+        
+        .footer {
+            margin-top: 3rem;
+            padding: 1rem 0;
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        @media (max-width: 768px) {
+            .display-4 {
+                font-size: 2.5rem;
+            }
+            
+            .lead {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-robot me-2"></i>AI Branch Manager
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#demo">Demo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row align-items-center py-5">
+            <div class="col-md-6">
+                <h1 class="display-4 fw-bold text-primary">Welcome to AI Branch Manager</h1>
+                <p class="lead">Experience a seamless, branch-like banking experience from the comfort of your home.</p>
+                <p>Our AI-powered Branch Manager guides you through loan applications with video-based conversations, making banking more interactive and accessible.</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <a href="#demo" class="btn btn-primary btn-lg px-4 me-md-2">
+                        <i class="fas fa-comment-dots me-2"></i>Try Demo
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="video-container">
+                    <div>AI Branch Manager Demo</div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <div id="demo" class="row">
+            <div class="col-lg-10 mx-auto">
+                <h2 class="text-center mb-4">AI Branch Manager Demo</h2>
+                
+                <!-- Progress Indicator -->
+                <div class="stage-indicator">
+                    <div class="stage-line"></div>
+                    <div class="stage-progress" id="stage-progress"></div>
+                    <div class="stage-dot active" id="stage-1" title="Introduction">1</div>
+                    <div class="stage-dot" id="stage-2" title="Personal Details">2</div>
+                    <div class="stage-dot" id="stage-3" title="Loan Purpose">3</div>
+                    <div class="stage-dot" id="stage-4" title="Loan Amount">4</div>
+                    <div class="stage-dot" id="stage-5" title="Employment">5</div>
+                    <div class="stage-dot" id="stage-6" title="Documents">6</div>
+                    <div class="stage-dot" id="stage-7" title="Result">7</div>
+                </div>
+                
+                <!-- AI Video Container -->
+                <div class="video-container mb-4">
+                    <div id="ai-video-placeholder">
+                        <i class="fas fa-video me-2"></i> Virtual Branch Manager Video
+                    </div>
+                </div>
+                
+                <!-- Question Display -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-comment-dots me-2"></i>Branch Manager is asking:</h5>
+                        <p class="card-text" id="question-text">Hello! I'm your AI Branch Manager. I'll guide you through the loan application process. How may I help you today?</p>
+                    </div>
+                </div>
+                
+                <!-- Recording Controls -->
+                <div class="text-center mb-4">
+                    <button class="btn btn-danger" id="record-btn">
+                        <i class="fas fa-microphone me-2"></i>Record Video Response
+                    </button>
+                    <button class="btn btn-primary" id="next-btn">
+                        <i class="fas fa-arrow-right me-2"></i>Next Step
+                    </button>
+                </div>
+                
+                <!-- Chat History -->
+                <div class="chat-container" id="chat-history">
+                    <div class="chat-bubble ai-bubble">
+                        <p>Hello! I'm your AI Branch Manager. I'll guide you through the loan application process. How may I help you today?</p>
+                    </div>
+                </div>
+                
+                <!-- Document Upload Section (Hidden by default) -->
+                <div class="card mb-4" id="document-section" style="display: none;">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-file-upload me-2"></i>Upload Documents</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id-proof" class="form-label">ID Proof (Aadhaar/PAN)</label>
+                                <input class="form-control" type="file" id="id-proof" accept="image/*">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="income-proof" class="form-label">Income Proof</label>
+                                <input class="form-control" type="file" id="income-proof" accept="image/*">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" id="upload-documents">
+                            <i class="fas fa-upload me-2"></i>Submit Documents
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <div id="features" class="row g-4 py-4">
+            <h2 class="text-center mb-4">Key Features</h2>
+            
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-tie fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title h5">Virtual AI Branch Manager</h3>
+                        <p class="card-text">Interact with a video assistant that mimics a real-life bank manager, guiding you through the loan application process.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-video fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title h5">Video-Based Interaction</h3>
+                        <p class="card-text">Record video responses instead of filling lengthy forms, with facial verification for security.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-file-upload fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title h5">Simplified Document Processing</h3>
+                        <p class="card-text">Upload documents via mobile or webcam with automatic extraction of key details.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-check-circle fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title h5">Instant Loan Eligibility</h3>
+                        <p class="card-text">Get immediate feedback on your loan application with our rule-based eligibility system.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-language fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title h5">Multi-Language Support</h3>
+                        <p class="card-text">Access our services in multiple Indian languages for a more inclusive experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">© 2025 AI Branch Manager. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script>
+        // Demo functionality
+        $(document).ready(function() {
+            let currentStage = 1;
+            const totalStages = 7;
+            
+            // Questions for each stage
+            const questions = [
+                "Hello! I'm your AI Branch Manager. I'll guide you through the loan application process. How may I help you today?",
+                "Please tell me your full name, age, and contact details.",
+                "What type of loan are you looking for and what's the purpose?",
+                "How much loan amount are you looking for and what repayment period would you prefer?",
+                "Please share your employment details and monthly income.",
+                "Now I'll need to verify your identity and income. Please upload your ID proof and income documents.",
+                "Thank you for the documents. Let me check your loan eligibility.",
+                "Congratulations! Your loan is pre-approved. Our representative will contact you shortly."
+            ];
+            
+            // Update progress bar
+            function updateProgress() {
+                const progress = ((currentStage - 1) / (totalStages - 1)) * 100;
+                $("#stage-progress").css("width", `${progress}%`);
+                
+                // Update stage dots
+                for (let i = 1; i <= totalStages; i++) {
+                    const dot = $(`#stage-${i}`);
+                    if (i < currentStage) {
+                        dot.removeClass("active").addClass("completed");
+                        dot.html('<i class="fas fa-check"></i>');
+                    } else if (i === currentStage) {
+                        dot.addClass("active").removeClass("completed");
+                        dot.text(i);
+                    } else {
+                        dot.removeClass("active completed");
+                        dot.text(i);
+                    }
+                }
+            }
+            
+            // Add message to chat history
+            function addMessageToChat(message, isAI = false) {
+                const bubble = $("<div>").addClass(`chat-bubble ${isAI ? 'ai-bubble' : 'user-bubble'}`);
+                const text = $("<p>").text(message);
+                
+                bubble.append(text);
+                $("#chat-history").append(bubble);
+                
+                // Scroll to bottom
+                $("#chat-history").scrollTop($("#chat-history")[0].scrollHeight);
+            }
+            
+            // Handle record button click
+            $("#record-btn").click(function() {
+                // Simulate recording
+                $(this).html('<i class="fas fa-spinner fa-spin me-2"></i>Recording...');
+                
+                setTimeout(() => {
+                    $(this).html('<i class="fas fa-microphone me-2"></i>Record Video Response');
+                    addMessageToChat("Video response recorded", false);
+                }, 2000);
+            });
+            
+            // Handle next button click
+            $("#next-btn").click(function() {
+                currentStage++;
+                
+                if (currentStage > totalStages) {
+                    // Reset demo
+                    currentStage = 1;
+                }
+                
+                // Update question
+                $("#question-text").text(questions[currentStage - 1]);
+                addMessageToChat(questions[currentStage - 1], true);
+                
+                // Show document upload section at stage 6
+                if (currentStage === 6) {
+                    $("#document-section").show();
+                } else {
+                    $("#document-section").hide();
+                }
+                
+                // Update progress
+                updateProgress();
+            });
+            
+            // Handle document upload
+            $("#upload-documents").click(function() {
+                const idProof = $("#id-proof").val();
+                const incomeProof = $("#income-proof").val();
+                
+                if (!idProof && !incomeProof) {
+                    alert("Please upload at least one document");
+                    return;
+                }
+                
+                $(this).html('<i class="fas fa-spinner fa-spin me-2"></i>Uploading...');
+                
+                setTimeout(() => {
+                    $(this).html('<i class="fas fa-upload me-2"></i>Submit Documents');
+                    addMessageToChat("Documents uploaded successfully", false);
+                    
+                    // Move to next stage automatically
+                    currentStage++;
+                    $("#question-text").text(questions[currentStage - 1]);
+                    addMessageToChat(questions[currentStage - 1], true);
+                    $("#document-section").hide();
+                    updateProgress();
+                }, 2000);
+            });
+            
+            // Initialize
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
