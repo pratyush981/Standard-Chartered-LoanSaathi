@@ -8,7 +8,7 @@ LoanSaathi is an AI-powered virtual bank manager designed to streamline the loan
 
 🎯 Features
 
-✅ AI-driven loan assistance through chatbot
+✅ AI-driven loan assistance
 
 ✅ OCR-based document verification
 
