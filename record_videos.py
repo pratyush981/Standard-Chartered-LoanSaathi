@@ -7,7 +7,6 @@ def ensure_dir(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-# Create videos directory if it doesn't exist
 videos_dir = os.path.join('static', 'videos')
 ensure_dir(videos_dir)
 
