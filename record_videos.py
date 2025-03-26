@@ -22,7 +22,7 @@ stages = [
     "result_more_info"
 ]
 
-# Script prompts for each stage
+
 prompts = {
     "introduction": "Hello! I'm your Loan Saathi. I'll guide you through the loan application process. How may I help you today?",
     "personal_details": "Please tell me your full name, age, and contact details.",
