@@ -49,12 +49,10 @@ def record_video(stage_name, prompt):
         print("Error: Could not open camera.")
         return
     
-    # Get video properties
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = 30
     
-    # Wait for 'r' key to start recording
     recording = False
     output_file = os.path.join(videos_dir, f"{stage_name}.mp4")
     out = None
@@ -65,10 +63,9 @@ def record_video(stage_name, prompt):
             print("Error: Failed to capture image")
             break
         
-        # Display recording status
         if recording:
             cv2.putText(frame, "RECORDING", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-            # Add script as teleprompter
+            
             lines = [prompt[i:i+40] for i in range(0, len(prompt), 40)]
             y_pos = height - 120
             for line in lines:
