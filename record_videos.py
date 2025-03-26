@@ -10,7 +10,6 @@ def ensure_dir(directory):
 videos_dir = os.path.join('static', 'videos')
 ensure_dir(videos_dir)
 
-# Define the stages for which we need to record videos
 stages = [
     "introduction",
     "personal_details",
